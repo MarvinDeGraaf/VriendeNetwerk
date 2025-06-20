@@ -41,6 +41,7 @@ if ($aantal == 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/friendsAndRequests.css">
     <title>Vrienden</title>
 </head>
 
@@ -60,15 +61,20 @@ if ($aantal == 0) {
         </nav>
     </div>
     <main>
-        <div>
-            <div>
-                <h2><?php echo $result; ?></h2>
+        <div class="centeredContainer">
+            <div class="friendList">
+                
                 <table>
+                    <tr>
+                        <td>
+                            <h2><?php echo $result; ?></h2>
+                        </td>
+                    </tr>
                     <?php
                     foreach ($friends as $friend) {
                         if ($friend['username'] != $username) {
                             echo "<tr>";
-                            echo "<td><a href='persoon.php?id=" . $friend['customerid'] . "'>" . $friend['username'] . ' (' . $friend['firstName'] . ' ' . $friend['prefix'] . ' ' . $friend['lastName'] . ")</a> <a href=wijzigVriendschap.php?id=" . $friend['friendLinkid'] . "&action=delete><button>Verwijder vriend</button></a></td>";
+                            echo "<td><a href='persoon.php?id=" . $friend['customerid'] . "'>" . $friend['username'] . ' (' . $friend['firstName'] . ' ' . $friend['prefix'] . ' ' . $friend['lastName'] . ")</a> <a href=wijzigVriendschap.php?id=" . $friend['friendLinkid'] . "&action=delete><button class='removeFriend'>Verwijder vriend</button></a></td>";
                             echo "</tr>";
                         }
                     }

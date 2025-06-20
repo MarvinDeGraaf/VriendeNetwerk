@@ -7,7 +7,7 @@
 body {
     background: cross-fade();
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
+
     img {
         width: 25%;
         height: auto;
@@ -16,6 +16,7 @@ body {
     }
 
     form {
+        text-align: center;
         width: 400px;
         margin: 0 auto;
         display: flex;
@@ -37,6 +38,19 @@ body {
 
         button {
             width: 100%;
+            background-color: #00ffff;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: #00cccc;
+            }
+        }
+
+        .register {
+            width: 100%;
             padding: 10px 20px;
             margin-bottom: 10px;
             background-color: #00ffff;
@@ -51,11 +65,4 @@ body {
         }
     }
 
-    .error {
-        width: 200px;
-        margin: 0 auto;
-        p {
-            text-align: center;
-        }
-    }
 }

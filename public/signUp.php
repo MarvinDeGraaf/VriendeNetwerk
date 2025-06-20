@@ -60,9 +60,11 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/sign-up.css">
     <title>Registreren</title>
 </head>
 <body>
+    <img src="../assets/Images/VriendeNetwerk.png" alt="logo">
     <form action="" method="post">
         <label for="username">gebruikersnaam: </label>
         <input type="text" name="username" id="username" required><br>
@@ -91,7 +93,7 @@ if (isset($_POST['submit'])) {
         <input type="number" name="age" id="age" required><br>
         <label for="gender">geslacht: </label>
         <select name="gender" id="gender" required>
-            <option value="default">--Selecteer</option>
+            <option value="default">--Selecteer--</option>
             <option value="M">Man</option>
             <option value="F">Vrouw</option>
         </select><br>
@@ -106,12 +108,17 @@ if (isset($_POST['submit'])) {
         <label for="country">land: </label>
         <input type="text" name="country" id="country" required><br>
         <h2>interesses</h2>
-        <label> Favoriete Uitgaansgelegenheid: <input type="text" name="outing" required></label><br>
-        <label> Favoriet liedje: <input type="text" name="song" required></label><br>
-        <label> Favoriete film: <input type="text" name="film" required></label><br>
-        <label> Favoriete eten: <input type="text" name="meal" required></label><br>
-        <label> Favoriete Docent: <input type="text" name="professor" required></label><br>
-        <input type="submit" name="submit" value="Registreren"><br>
+        <label> Favoriete Uitgaansgelegenheid: </label><br>
+        <input type="text" name="outing" required><br>
+        <label> Favoriet liedje: </label><br>
+        <input type="text" name="song" required><br>
+        <label> Favoriete film: </label><br>
+        <input type="text" name="film" required><br>
+        <label> Favoriete eten: </label><br>
+        <input type="text" name="meal" required><br>
+        <label> Favoriete Docent: </label><br>
+        <input type="text" name="professor" required><br>
+        <input type="submit" name="submit" value="Registreren" class="register"><br>
     </form>
     <form action="" method="post">
         <input type="submit" value="inloggen" name="login"><br>

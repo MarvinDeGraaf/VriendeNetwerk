@@ -20,32 +20,33 @@ if ($aantal == 0) {
     $customers = $customerService->getCustomersByOpleiding($search);
     $aantal = count($customers);
     foreach ($customers as $customer) {
-    if ($customer['username'] == $username) {
-        $aantal--;
+        if ($customer['username'] == $username) {
+            $aantal--;
+        }
     }
-}
 }
 
 if ($aantal == 0) {
     $result = "we hebben geen mensen gevonden";
-}
-else {
+} else {
     if ($aantal == 1) {
         $result = "we hebben 1 persoon gevonden";
-    }
-    else {
+    } else {
         $result = "we hebben $aantal personen gevonden";
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/vriendenzoek.css">
     <title>VriendeNetwerk Zoeken</title>
 </head>
+
 <body>
     <div>
         <nav>
@@ -62,16 +63,21 @@ else {
         </nav>
     </div>
 
-    <h2><?php echo $result; ?></h2>
+    <main>
+        <div class="results">
+            <h2><?php echo $result; ?></h2>
 
-    <?php if (isset($customers)) {
-        foreach ($customers as $customer) {
-            if ($customer['username'] != $username) {
-                echo "<div class='customer-card'><a href='persoon.php?id=" . $customer['customerid'] . "'>";
-                echo "<h3>" . $customer['firstName'] . " " . $customer['prefix']. " " . $customer['lastName'] . " (" . $customer['username'] .")</h3>";
-                echo "</div>";
-            }
-        }
-    } ?>
+            <?php if (isset($customers)) {
+                foreach ($customers as $customer) {
+                    if ($customer['username'] != $username) {
+                        echo "<div class='customer-card'><a href='persoon.php?id=" . $customer['customerid'] . "'>";
+                        echo "<h3>" . $customer['firstName'] . " " . $customer['prefix'] . " " . $customer['lastName'] . " (" . $customer['username'] . ")</h3></a>";
+                        echo "</div>";
+                    }
+                }
+            } ?>
+        </div>
+    </main>
 </body>
+
 </html>

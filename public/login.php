@@ -25,10 +25,12 @@ if(isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/login.css">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <img src="../assets/Images/VriendeNetwerk.png" alt="logo">
     <form action="" method="post">
         <label for="username">Gebruikersnaam:</label>
         <input type="text" name="username" id="username" required><br>
@@ -36,12 +38,6 @@ if(isset($_POST['submit'])) {
         <input type="password" name="password" id="password" required><br>
         <button type="submit" name="submit">Login</button>
     </form>
-
-    <?php
-    if (isset($error)) {
-        echo "<p style='color:red;'>$error</p>";
-    }
-    ?>
     <form action="" method="post" class="register">
         <input type="submit" value="Registreren" name="register"><br>
         <?php
@@ -50,5 +46,11 @@ if(isset($_POST['submit'])) {
         }
         ?>
     </form>
+
+        <?php if (isset($error)) {
+            echo "<div class=\"error\">";
+            echo "<p style='color:red;'>$error</p>";
+            echo "</div>";
+        } ?>
 </body>
 </html>

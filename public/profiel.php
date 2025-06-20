@@ -72,7 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//checks if POST was used
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/profiel.css">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
     <title>Profiel</title>
 </head>
 
@@ -141,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//checks if POST was used
                     <label> Favoriete film: <input type="text" name="film" value="<?php echo $customer['film']; ?>"></label><br>
                     <label> Favoriete eten: <input type="text" name="meal" value="<?php echo $customer['meal']; ?>"></label><br>
                     <label> Favoriete Docent: <input type="text" name="professor" value="<?php echo $customer['professor']; ?>"></label><br>
-                    <input type="submit" value="Bewerk" name="saveInterests" class="save">
+                    <input type="submit" value="Bewerk Interesses" name="saveInterests" class="save">
                 </div>
             </form>
         </div>

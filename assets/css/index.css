@@ -1,81 +1,93 @@
 main {
 
-    .welkom {}
+    .welkom {
+        text-align: center;
+        margin: 20px auto;
+        max-width: 1400px;
 
-    .vrienden {}
+        input {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #00ffff;
+            color: white;
+        }
 
-    .messages {
-        .messages {
-            max-width: 268.5px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border: 3px solid black;
-            border-radius: 20px;
+        input:hover {
+            background-color: #00cccc;
+            cursor: pointer;
+        }
+    }
 
-            .message-list {
-                height: 80%;
-                width: inherit;
-                display: flex;
-                flex-direction: column;
+    .vriendInfo {
+        max-height: 80vh;
+        max-width: 1400px;
+        margin: 20px auto;
+        display: flex;
 
-                .message {
-                    background-color: white;
-                    border-radius: 15px 15px 15px 0;
-                    width: fit-content;
-                    padding: 10px 12px 10px 10px;
-                    margin-bottom: 5px;
+        div {
+            table {
+                border-radius: 20px;
+                overflow-y: auto;
+                max-height: 500px;
+                border-collapse: collapse;
+
+                td,
+                th {
+                    padding: 8px;
+                    text-align: center;
 
                     a {
-                        font-size: 10px;
-                        color: white;
                         text-decoration: none;
-                    }
-
-                    .message-time {
-                        font-size: 10px;
+                        color: #00a1a1;
                     }
                 }
 
-                .jij {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-end;
-                    align-self: flex-end;
-                    width: fit-content;
-                    text-align: right;
-                    background-color: blue;
-                    color: white;
-                    border-radius: 15px 0 15px 15px;
-                    width: fit-content;
-                    padding: 10px 12px 10px 10px;
-
-                    .message-time {
-                        font-size: 10px;
-                    }
+                th {
+                    height: 30px;
                 }
             }
 
+            width: 20%;
+            text-align: center;
+        }
+
+        .requests,
+        .messages,
+        .vrienden {
+            border: 3px solid black;
+            border-radius: 20px;
+        }
+
+        .requests {
+            width: 60%;
+            display: flex;
+
+            table {
+                width: 50%;
+            }
         }
 
         .messages {
             max-width: 268.5px;
             padding: 20px;
-            display: flex;
             flex-direction: column;
             justify-content: space-between;
-            border: 3px solid black;
-            border-radius: 20px;
 
             .message-list {
+                overflow-y: auto;
+                max-height: 500px;
+                text-align: left;
                 height: 80%;
-                width: inherit;
+                width: 100%;
                 display: flex;
                 flex-direction: column;
 
                 .message {
-                    background-color: white;
+                    background-color: #00a1a1;
+                    color: white;
                     border-radius: 15px 15px 15px 0;
                     width: fit-content;
                     padding: 10px 12px 10px 10px;
@@ -99,18 +111,13 @@ main {
                     align-self: flex-end;
                     width: fit-content;
                     text-align: right;
-                    background-color: blue;
+                    background-color: #00cccc;
                     color: white;
                     border-radius: 15px 0 15px 15px;
                     width: fit-content;
                     padding: 10px 12px 10px 10px;
-
-                    .message-time {
-                        font-size: 10px;
-                    }
                 }
             }
-
         }
     }
 }

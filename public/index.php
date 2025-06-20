@@ -3,8 +3,18 @@ session_start();
 if (!isset($_SESSION['login'])) {
     header('location: ../public/login.php');
 }
+require_once('../src/customer.php');
+$customerService = new Customer();
 $username = $_SESSION['username'];
+$customer = $customerService->getCustomerByUsername($username)[0];
 
+require_once('../src/friendrequest.php');
+require_once('../src/customer.php');
+$customerService = new Customer();
+$friendRequestService = new FriendRequest();
+$result = $customerService->getCustomerByUsername($username);
+$userid = $result[0]['customerid'];
+$friends = $friendRequestService->getAllFriends($userid);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +23,7 @@ $username = $_SESSION['username'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
     <title>VriendeNetwerk</title>
 </head>
 
@@ -45,108 +56,109 @@ $username = $_SESSION['username'];
                 ?>
             </form>
         </div>
-        <div class="vrienden">
-            <table>
-                <tr>
-                    <th colspan="2">Vrienden</th>
-                </tr>
-                <?php
-                require_once('../src/friendrequest.php');
-                require_once('../src/customer.php');
-                $customerService = new Customer();
-                $friendRequestService = new FriendRequest();
-                $result = $customerService->getCustomerByUsername($username);
-                $userid = $result[0]['customerid'];
-                $friends = $friendRequestService->getAllFriends($userid);
 
-                foreach ($friends as $friend) {
-                    if ($friend['username'] != $username) {
-                        if ($friend['prefix'] != null) {
+        <div class="vriendInfo">
+            <div class="vrienden">
+                <table>
+                    <tr>
+                        <th colspan="2">Vrienden</th>
+                    </tr>
+                    <?php
+                    foreach ($friends as $friend) {
+                        if ($friend['username'] != $username) {
+                            if ($friend['prefix'] != null) {
+                                echo "<tr>";
+                                echo "<td><a href='persoon.php?id=" . $friend['customerid'] . "'>" . $friend['username'] . ' (' . $friend['firstName'] . ' ' . $friend['prefix'] . ' ' . $friend['lastName'] . ")</a></td>";
+                                echo "</tr>";
+                            } else {
+                                echo "<tr>";
+                                echo "<td><a href='persoon.php?id=" . $friend['customerid'] . "'>" . $friend['username'] . ' (' . $friend['firstName'] . ' ' . $friend['lastName'] . ")</a></td>";
+                                echo "</tr>";
+                            }
                             echo "<tr>";
-                            echo "<td><a href='persoon.php?id=" . $friend['customerid'] . "'>" . $friend['username'] . ' (' . $friend['firstName'] . ' ' . $friend['prefix'] . ' ' . $friend['lastName'] . ")</a></td>";
-                            echo "</tr>";
-                        } else {
-                            echo "<tr>";
-                            echo "<td><a href='persoon.php?id=" . $friend['customerid'] . "'>" . $friend['username'] . ' (' . $friend['firstName'] . ' ' . $friend['lastName'] . ")</a></td>";
-                            echo "</tr>";
+                            echo "<td><a href='index.php?id=" . $friend['customerid'] . "'>Bekijk Chats</a></td>";
                         }
-                        echo "<tr>";
-                        echo "<td><a href='index.php?id=" . $friend['customerid'] . "'>Bekijk Chats</a></td>";
                     }
-                }
-                ?>
-            </table>
-            <table>
-                Inkomende Verzoeken
-                <tr>
-                    <th>Naam</th>
-                    <th>Status</th>
-                    <th>Accepteren</th>
-                    <th>Afwijzen</th>
-                </tr>
-                <?php
-                $incomingRequests = $friendRequestService->getAllFriendRequests($userid, 10);
-                foreach ($incomingRequests as $request) {
-                    echo "<tr>";
-                    echo "<td>" . $request['username'] . "</td>";
-                    echo "<td>" . $request['Status'] . "</td>";
-                    echo "<td><a href='wijzigVriendschap.php?id=" . $request['friendLinkid'] . "&action=accept'>Accepteren</a></td>";
-                    echo "<td><a href='wijzigVriendschap.php?id=" . $request['friendLinkid'] . "&action=reject'>Afwijzen</a></td>";
-                    echo "</tr>";
-                }
-                ?>
-            </table>
-            <table>
-                Uitgaande Verzoeken
-                <tr>
-                    <th>Naam</th>
-                    <th>Status</th>
-                    <th>Herroepen</th>
-                </tr>
-                <?php
-                $outgoingRequests = $friendRequestService->getAllSentFriendRequests($userid);
-                foreach ($outgoingRequests as $request) {
-                    echo "<tr>";
-                    if ($request['prefix'] != null) {
-                        echo "<td>" . $request['firstName'] . ' ' . $request['prefix'] . ' ' . $request['lastName'] . ' (' . $request['username'] . ")</td>";
-                    } else {
-                        echo "<td>" . $request['firstName'] . ' ' . $request['lastName'] . ' (' . $request['username'] . ")</td>";
-                    }
-                    echo "<td>" . $request['Status'] . "</td>";
-                    echo "<td><a href='wijzigVriendschap.php?id=" . $request['friendLinkid'] . "&action=revoke'>Herroepen</a></td>";
-                    echo "</tr>";
-                }
-                ?>
-            </table>
-        </div>
-        <?php if (isset($_GET['id'])): ?>
-            <div class='messages';>
-                <h2>Berichten</h2>
-                <div class='message-list'>
-                <?php
-                if (isset($_GET['id'])) {
-                    $friendId = $_GET['id'];
-                    require_once('../src/messages.php');
-                    $messageService = new Messages();
-                    $messages = $messageService->getMessages($userid, $friendId);
-                    if (empty($messages)) {
-                        echo "<p>Geen berichten gevonden.</p>";
-                    }
-                    foreach ($messages as $message) {
-                        echo "<div class='message ";
-                        if ($message['sender_customerid'] == $friendId) {
-                            echo "jij'>";
-                        } else {
-                            echo "'>";
-                        }
-                        echo "<p class='message-content'>" . $message['message'] . "</p>";
-                        echo "<p class='message-time'>" . $message['timeOfSending'] . "</p></div>";
-                    }
-                }
-                ?>
+                    ?>
+                </table>
             </div>
+            <div class="requests">
+                <table>
+                    <tr>
+                        <th colspan="4">Inkomende Verzoeken</th>
+                    </tr>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Status</th>
+                        <th>Accepteren</th>
+                        <th>Afwijzen</th>
+                    </tr>
+                    <?php
+                    $incomingRequests = $friendRequestService->getAllFriendRequests($userid, 10);
+                    foreach ($incomingRequests as $request) {
+                        echo "<tr>";
+                        echo "<td>" . $request['username'] . "</td>";
+                        echo "<td>" . $request['Status'] . "</td>";
+                        echo "<td><a href='wijzigVriendschap.php?id=" . $request['friendLinkid'] . "&action=accept'>Accepteren</a></td>";
+                        echo "<td><a href='wijzigVriendschap.php?id=" . $request['friendLinkid'] . "&action=reject'>Afwijzen</a></td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </table>
+                <table>
+                    <tr>
+                        <th colspan="3">Uitgaande Verzoeken</th>
+                    </tr>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Status</th>
+                        <th>Herroepen</th>
+                    </tr>
+                    <?php
+                    $outgoingRequests = $friendRequestService->getAllSentFriendRequests($userid);
+                    foreach ($outgoingRequests as $request) {
+                        echo "<tr>";
+                        if ($request['prefix'] != null) {
+                            echo "<td>" . $request['firstName'] . ' ' . $request['prefix'] . ' ' . $request['lastName'] . ' (' . $request['username'] . ")</td>";
+                        } else {
+                            echo "<td>" . $request['firstName'] . ' ' . $request['lastName'] . ' (' . $request['username'] . ")</td>";
+                        }
+                        echo "<td>" . $request['Status'] . "</td>";
+                        echo "<td><a href='wijzigVriendschap.php?id=" . $request['friendLinkid'] . "&action=revoke'>Herroepen</a></td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </table>
+            </div>
+            <div class='messages'>
+                <h2>Berichten</h2>
+                <?php if (isset($_GET['id'])): ?>
+                    <div class='message-list'>
+                        <?php
+                        if (isset($_GET['id'])) {
+                            $friendId = $_GET['id'];
+                            require_once('../src/messages.php');
+                            $messageService = new Messages();
+                            $messages = $messageService->getMessages($userid, $friendId);
+                            if (empty($messages)) {
+                                echo "<p>Geen berichten gevonden.</p>";
+                            }
+                            foreach ($messages as $message) {
+                                echo "<div class='message ";
+                                if ($message['sender_customerid'] == $userid) {
+                                    echo "jij'>";
+                                } else {
+                                    echo "'>";
+                                }
+                                echo "<p class='message-content'>" . $message['message'] . "</p>";
+                                echo "<p class='message-time'>" . $message['timeOfSending'] . "</p></div>";
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
-        <?php endif; ?>
     </main>
 </body>
 

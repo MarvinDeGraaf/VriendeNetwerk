@@ -19,6 +19,7 @@ $AllUitgoingfriendRequests = $friendRequestService->getAllSentFriendRequests($us
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/friendsAndRequests.css">
     <title>Uitgaande Vezoeken van <?php echo $username; ?></title>
 </head>
 
@@ -38,7 +39,7 @@ $AllUitgoingfriendRequests = $friendRequestService->getAllSentFriendRequests($us
         </nav>
     </div>
     <main>
-        <div>
+        <div class="vriendInfo">
             <table>
                 <tr>
                     <th>naam</th>
